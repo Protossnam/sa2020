@@ -132,7 +132,7 @@ Count number of session each logged in user, sorted by this number in descending
 \noindent - Input
 
 \begin{verbbox}
-who | cut -f1 -d ' ' | sort -k 1 | uniq -c
+awk {'print $1'} | who | cut -f1 -d ' ' | sort -k 1 | uniq -c
 \end{verbbox}
 
 \fbox{
@@ -219,7 +219,7 @@ List all files in current directory, recursively, to which the user has full per
 \noindent - Input
 
 \begin{verbbox}
-I haven't done this question correctly yet
+ls -laR ./ | grep rwx
 \end{verbbox}
 
 \fbox{
@@ -229,7 +229,17 @@ I haven't done this question correctly yet
 \noindent - Output
 
 \begin{verbbox}
-None
+drwxr-xr-x 6 vinhnam vinhnam 4096 Thg 8 18  2019 ..
+drwxr-xr-x 2 vinhnam vinhnam 4096 Thg 8 18  2019 __pycache__
+drwxr-xr-x 2 vinhnam vinhnam 4096 Thg 8 18  2019 .
+drwxr-xr-x 3 vinhnam vinhnam 4096 Thg 8 18  2019 ..
+drwxr-xr-x 3 vinhnam vinhnam 4096 Thg 8 18  2019 .
+drwxr-xr-x 6 vinhnam vinhnam 4096 Thg 8 18  2019 ..
+drwxr-xr-x 2 vinhnam vinhnam 4096 Thg 8 18  2019 __pycache__
+drwxr-xr-x 2 vinhnam vinhnam 4096 Thg 8 18  2019 .
+drwxr-xr-x 3 vinhnam vinhnam 4096 Thg 8 18  2019 ..
+drwxr-xr-x 4 vinhnam vinhnam 4096 Thg 8 18  2019 .
+...
 \end{verbbox}
 
 \fbox{
@@ -244,8 +254,7 @@ Compare two files and show percentage of similarities between them
 \noindent - Input
 
 \begin{verbbox}
-dif=`expr $(diff file1 file2 | wc -l) / 2`; total=`expr $(cat file1 | wc -l)`; 
-echo "Similarity = `echo "scale=2; (1-$dif/$total)*100" | bc` %" 
+dif=`expr $(diff file1 file2 | wc -l) / 2`; total=`expr $(cat file1 | wc -l)`; echo "Similarity = `echo "scale=2; (1-$dif/$total)*100" | bc` %" 
 \end{verbbox}
 
 \fbox{
@@ -297,3 +306,4 @@ None (The bash script above was my algorithm and it seems not to work yet)
 }
 
 \end{document}
+

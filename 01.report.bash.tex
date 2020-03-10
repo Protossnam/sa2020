@@ -254,7 +254,8 @@ Compare two files and show percentage of similarities between them
 \noindent - Input
 
 \begin{verbbox}
-dif=`expr $(diff file1 file2 | wc -l) / 2`; total=`expr $(cat file1 | wc -l)`; echo "Similarity = `echo "scale=2; (1-$dif/$total)*100" | bc` %" 
+dif=`expr $(diff file1 file2 | wc -l) / 2`; total=`expr $(cat file1 | wc -l)`; 
+echo "Similarity = `echo "scale=2; (1-$dif/$total)*100" | bc` %" 
 \end{verbbox}
 
 \fbox{

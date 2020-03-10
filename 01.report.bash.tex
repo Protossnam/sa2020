@@ -1,0 +1,299 @@
+\documentclass[10pt, a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[total={6in, 8in}, margin=0.6in]{geometry}
+\usepackage{verbatimbox}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{titling}
+\setlength{\parskip}{3pt}
+
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\LARGE#1\end{center}
+    \vskip0.5cm}%
+}
+
+\usepackage{hyperref}
+\usepackage{listings}
+
+\title{[MI2.01] System Architectures}
+\subtitle{01.report.bash.tex}
+\author{HUYNH Vinh Nam \\ M19.ICT.007}
+\date{March 2020}
+
+\renewcommand{\baselinestretch}{1.5} 
+
+\begin{document}
+% Report title
+\maketitle
+
+% Report structure
+% Section 1
+\section{List logged in users}
+
+List everyone logged in and save the list in a file called “users” in your own home directory
+
+\noindent - Input
+
+\begin{verbbox}
+w > ~/users
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+\noindent - Output
+
+\begin{verbbox}
+ 22:46:28 up 10 min,  1 user,  load average: 1,38, 1,10, 0,62
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+vinhnam  :0       :0               01:36   ?xdm?   4:47   0.00s /usr/lib/gdm3/gdm-x-session 
+--run-script env GNOME_SHELL_SESSION_MODE=ubuntu gnome-session --session=ubuntu
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+% Section 2
+\section{List all running processes}
+
+List all processes that are running and add this list to the end of the “users” file
+
+\noindent - Input
+
+\begin{verbbox}
+ps -aux | less >> ~/users
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+\pagebreak
+
+\noindent - Output
+
+\begin{verbbox}
+ 22:46:28 up 10 min,  1 user,  load average: 1,38, 1,10, 0,62
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+vinhnam  :0       :0               01:36   ?xdm?   4:47   0.00s /usr/lib/gdm3/gdm-x-session 
+--run-script env GNOME_SHELL_SESSION_MODE=ubuntu gnome-session --session=ubuntu
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.5  0.0 225780  9812 ?        Ss   22:35   0:07 /lib/systemd/systemd 
+--system --deserialize 36
+root         2  0.0  0.0      0     0 ?        S    22:35   0:00 [kthreadd]
+root         4  0.0  0.0      0     0 ?        I<   22:35   0:00 [kworker/0:0H]
+root         5  0.0  0.0      0     0 ?        I    22:35   0:00 [kworker/u24:0]
+root         6  0.0  0.0      0     0 ?        I<   22:35   0:00 [mm_percpu_wq]
+...
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+% Section 3
+\section{List logged on users then sort by username}
+
+List everyone who is logged on sorted by their username
+
+\noindent - Input
+
+\begin{verbbox}
+w | sort
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+\noindent - Output
+
+\begin{verbbox}
+ 23:08:32 up 32 min,  1 user,  load average: 0,99, 0,88, 0,92
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+vinhnam  :0       :0               01:36   ?xdm?   2:46   0.00s /usr/lib/gdm3/gdm-x-session
+--run-script env GNOME_SHELL_SESSION_MODE=ubuntu gnome-session --session=ubuntu
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+% Section 4
+\section{Count number of session then do descending order sort}
+
+Count number of session each logged in user, sorted by this number in descending order
+
+\noindent - Input
+
+\begin{verbbox}
+who | cut -f1 -d ' ' | sort -k 1 | uniq -c
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+\noindent - Output
+
+\begin{verbbox}
+      1 vinhnam 
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+% Section 5
+\section{Show “/etc/fstab” content}
+
+Show content of the first and last 3 lines of the file “/etc/fstab”
+
+\noindent - Input
+
+\begin{verbbox}
+(head -3 /etc/fstab & tail -3 /etc/fstab)
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+\pagebreak
+
+\noindent - Output
+
+\begin{verbbox}
+# /etc/fstab: static file system information.
+#
+# Use 'blkid' to print the universally unique identifier for a
+UUID=2D07-58CD  /boot/efi       vfat    umask=0077      0       1
+# swap was on /dev/sda2 during installation
+UUID=dc9656ef-467b-4d51-9dd6-6fe795cdd0ea none            swap    sw              0       0
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+% Section 6
+\section{Retrieve data then write to a new file}
+
+Retrieve line number 5 to 10 from the file “/etc/fstab” and write these lines into a new file “extract.txt”
+
+\noindent - Input
+
+\begin{verbbox}
+sed -n 5,10p /etc/fstab > ~/extract.txt
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+\noindent - Output
+
+\begin{verbbox}
+# that works even if disks are added and removed. See fstab(5).
+#
+# <file system> <mount point>   <type>  <options>       <dump>  <pass>
+# / was on /dev/sda1 during installation
+UUID=2b78f333-bf9a-4a0c-9fe7-71df6a72a6b9 /               ext4    errors=remount-ro 0       1
+# /boot/efi was on /dev/sda3 during installation
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+% Section 7
+\section{List all files to which the user has full permissions}
+
+List all files in current directory, recursively, to which the user has full permissions
+
+\noindent - Input
+
+\begin{verbbox}
+I haven't done this question correctly yet
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+\noindent - Output
+
+\begin{verbbox}
+None
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+% Section 8
+\section{Compare and measure the similarity between two files}
+
+Compare two files and show percentage of similarities between them
+
+\noindent - Input
+
+\begin{verbbox}
+dif=`expr $(diff file1 file2 | wc -l) / 2`; total=`expr $(cat file1 | wc -l)`; 
+echo "Similarity = `echo "scale=2; (1-$dif/$total)*100" | bc` %" 
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+\noindent - Output
+
+\begin{verbbox}
+Similarity = 80.00 %
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+% Section 9
+\section{Find all files satisfy a condition}
+
+Find all files in current directory, recursively, that are at least 90\% similar
+
+\noindent - Input
+
+\begin{verbbox}
+for f in *.txt; do 
+    for f2 in *.txt; do 
+        if [ "diff -q $f $f2" ]; then 
+            break; 
+        elif [ expr $(diff $f $f2 | wc -l) / 2 -le 
+                                    echo "`expr $(cat $f | wc -l)` * 0.1" | bc ]; then
+            echo $f; 
+        fi 
+    done 
+done
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+\noindent - Output
+
+\begin{verbbox}
+None (The bash script above was my algorithm and it seems not to work yet)
+\end{verbbox}
+
+\fbox{
+\theverbbox
+}
+
+\end{document}

@@ -36,22 +36,16 @@ Scheduled
 
 - Question 2:
 Average waiting time:
-* FCFS	: W = 2.4 ms
-* SJF	: W = 2.4 ms
-* SRTF	: W = 1.5 ms
-* RR	: W = 2.4 ms
+* FCFS	: W = 2.425 ms
+* SJF	: W = 1.75 ms
+* SRTF	: W = 1.425 ms
+* RR	: W = 2.675 ms
 
 - Question 3:
 Average turnaround time:
 * FCFS	: 
-	T(P1) =  ms
-	T(P2) =  ms
-	T(P3) =  ms
-	T(P4) =  ms
-   -->  Average T =  ms
-* SJF	: 
-	T(P1) =  ms
-        T(P2) =  ms
-        T(P3) =  ms
-        T(P4) =  ms
-   -->  Average T =  ms
+	T(P1) = 5 ms
+	T(P2) = 3 ms
+	T(P3) = 2 ms
+	T(P4) = 1 ms
+   -->  Average T = 2.75 ms

@@ -66,7 +66,7 @@ List all processes that are running and add this list to the end of the “users
 \noindent - Input
 
 \begin{verbbox}
-ps -aux | less >> ~/users
+ps -aux >> ~/users
 \end{verbbox}
 
 \fbox{
@@ -254,7 +254,7 @@ Compare two files and show percentage of similarities between them
 \noindent - Input
 
 \begin{verbbox}
-dif=`expr $(diff file1 file2 | wc -l) / 2`; total=`expr $(cat file1 | wc -l)`; 
+dif=`expr $(diff $1 $2 | egrep "^(>|<)" | wc -l)`; total=`expr $(cat $1 | wc -l)`; 
 echo "Similarity = `echo "scale=2; (1-$dif/$total)*100" | bc` %" 
 \end{verbbox}
 
@@ -280,16 +280,24 @@ Find all files in current directory, recursively, that are at least 90\% similar
 \noindent - Input
 
 \begin{verbbox}
-for f in *.txt; do 
-    for f2 in *.txt; do 
-        if [ "diff -q $f $f2" ]; then 
-            break; 
-        elif [ expr $(diff $f $f2 | wc -l) / 2 -le 
-                                    echo "`expr $(cat $f | wc -l)` * 0.1" | bc ]; then
-            echo $f; 
-        fi 
-    done 
+list=`find .`
+for f1 in $list; do
+    for f2 in $list; do	
+        if [ "$f1" != "$f2" ] && [ -f "$f1" ] && [ -f "$f2" ]; then
+            dif=`diff $f1 $f2 | egrep "^(>|<)" | wc -l`
+            aLines=`wc -l < $f1`
+            bLines=`wc -l < $f2`
+            if [ $aLines -eq 0 ] && [ $bLines -eq 0 ]; then
+                exit 0
+            fi
+            similar=`echo "scale=2; (100-$dif * 100 * 2 / ($aLines + $bLines))" | bc`
+            if [ "$similar" -gt 90 ]; then
+                echo Similarity $similar: $f1 $f2
+            fi
+        fi
+    done
 done
+
 \end{verbbox}
 
 \fbox{
@@ -299,7 +307,7 @@ done
 \noindent - Output
 
 \begin{verbbox}
-None (The bash script above was my algorithm and it seems not to work yet)
+Similarity users extract.txt
 \end{verbbox}
 
 \fbox{

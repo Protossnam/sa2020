@@ -1,0 +1,57 @@
++--------+------------------+----------------+
+|Process |Arrival Time (ms) |Burst Time (ms) |
++--------+------------------+----------------+
+|   P1   |	  0.0	    |	     5       |
+|   P2   |	  1.0       |	     3       |
+|   P3   |	  5.5       |	     2	     |
+|   P4   |	  6.8       |	     1	     |
++--------+------------------+----------------+
+
+- Question 1:
+
+P1  [----------]   			(5 ms)
+P2     [------]				(3 ms)
+P3	       [----]			(2 ms)
+P4	           [--]			(1 ms)
+
+* FCFS
+Scheduled 
+[----------][------][----][--]
+     P1	       P2     P3   P4
+
+* SJF
+Scheduled
+[--][----][------][----------]
+ P4    P3    P2        P1	
+
+* SRTF
+Scheduled
+[--][------][---][---][--][-----]
+ P1    P2    P1   P3   P4   P1	
+
+* RR (s = 1ms)
+Scheduled
+[--][--][--][--][--][--][--][--][--][--][--]
+ P1  P2  P1  P2  P1  P2  P3  P1  P3  P4  P1 
+
+- Question 2:
+Average waiting time:
+* FCFS	: W = 2.4 ms
+* SJF	: W = 2.4 ms
+* SRTF	: W = 1.5 ms
+* RR	: W = 2.4 ms
+
+- Question 3:
+Average turnaround time:
+* FCFS	: 
+	T(P1) =  ms
+	T(P2) =  ms
+	T(P3) =  ms
+	T(P4) =  ms
+   -->  Average T =  ms
+* SJF	: 
+	T(P1) =  ms
+        T(P2) =  ms
+        T(P3) =  ms
+        T(P4) =  ms
+   -->  Average T =  ms

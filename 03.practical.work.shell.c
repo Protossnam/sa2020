@@ -1,4 +1,6 @@
 #include<string.h>
+#include<sys/types.h>
+#include<sys/wait.h>
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
@@ -20,6 +22,11 @@ int main()
 			char *args[] = {cmd, NULL};
            		execvp(cmd, args);
         	}
+		else 
+		{
+			wait(NULL);
+			printf("\n");
+		}
     	}	
 	return 0;
 }
